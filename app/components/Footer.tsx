@@ -125,7 +125,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="text-cyan-400 hover:text-cyan-300 font-medium"
             >
-              Bnadaru Sudheer
+              Bandaru Sudheer
             </a>
           </p>
         </motion.div>
