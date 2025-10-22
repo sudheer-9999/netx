@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import RegisterButton from "./buttons/RegisterButton";
 
 export default function Tournament() {
   const ref = useRef(null);
@@ -168,19 +169,7 @@ export default function Tournament() {
             </div>
           </div>
 
-          <motion.a
-            whileHover={{
-              scale: 1.05,
-              boxShadow: "0 0 40px rgba(6, 182, 212, 0.6)",
-            }}
-            whileTap={{ scale: 0.95 }}
-            href="https://app.formsuite.co/l/Hcfz866IWmf0vBll2T?fbclid=PAb21jcANktnhleHRuA2FlbQIxMQABp0oiEZonRn4M_oas_jNAYZDn1UBfZp3c8IK_AWdXrRK1QCI4CT3o-vd7G12s_aem_cztf7aPl1edN8qn6-I80fg"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-bold rounded-lg text-lg"
-          >
-            Register Now
-          </motion.a>
+          <RegisterButton />
         </motion.div>
       </div>
     </section>
