@@ -17,6 +17,9 @@ export const metadata = {
   title: "NetX - Your Vision. Our Execution.",
   description:
     "Professional event orchestration company organizing sports tournaments, corporate events, and social celebrations",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({

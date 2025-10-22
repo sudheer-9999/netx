@@ -58,8 +58,8 @@ export default function Header({
             className="flex items-center space-x-3 cursor-pointer"
             onClick={() => handleNavigation("home")}
           >
-            <div className="w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center">
-              <span className="text-black font-bold text-lg">N</span>
+            <div className="w-10 h-10 rounded-lg overflow-hidden flex items-center justify-center">
+              <img src="/logo.png" alt="Logo" className="object-cover h-14" />
             </div>
             <span className="text-xl font-bold glow-text font-orbitron">
               NetX
