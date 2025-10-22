@@ -1,5 +1,6 @@
 "use client";
 
+import { Player } from "@lottiefiles/react-lottie-player";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
@@ -10,22 +11,22 @@ export default function About() {
 
   const features = [
     {
-      icon: "🚀",
+      icon: "execution",
       title: "End-to-End Event Management",
       description: "Complete planning and execution from concept to completion",
     },
     {
-      icon: "🎨",
+      icon: "branding",
       title: "Custom Themes & Branding",
       description: "Personalized event themes that match your vision",
     },
     {
-      icon: "🤝",
+      icon: "trusted-network",
       title: "Trusted Network",
       description: "Verified vendors, artists, and service providers",
     },
     {
-      icon: "⭐",
+      icon: "professional",
       title: "Professional Execution",
       description: "Experienced team ensuring flawless event delivery",
     },
@@ -62,7 +63,13 @@ export default function About() {
               whileHover={{ scale: 1.05, y: -10 }}
               className="bg-black/30 backdrop-blur-md rounded-2xl p-6 border border-cyan-500/20 hover:border-cyan-500/50 transition-all duration-300 text-center"
             >
-              <div className="text-4xl mb-4">{feature.icon}</div>
+              <Player
+                src={`/animations/${feature.icon}.json`}
+                className="w-32 h-32"
+                autoplay
+                loop
+                speed={1.5}
+              />
               <h3 className="text-xl font-bold mb-3 text-cyan-400">
                 {feature.title}
               </h3>
