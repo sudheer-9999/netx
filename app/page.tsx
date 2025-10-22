@@ -1,13 +1,14 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useState } from "react";
-import About from "./components/About";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Services from "./components/Services";
 import Tournament from "./components/Tournament";
+const About = dynamic(() => import("./components/About"), { ssr: false });
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState("home");
