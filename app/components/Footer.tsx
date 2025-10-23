@@ -48,9 +48,9 @@ export default function Footer() {
             whileInView={{ opacity: 1, y: 0 }}
             className="md:col-span-2"
           >
-            <div className="flex items-center space-x-3 mb-4">
+            <div className="flex items-center mb-4">
               <div className="w-10 h-10 rounded-lg overflow-hidden flex items-center justify-center">
-                <img src="/logo.png" alt="Logo" className="object-cover h-14" />
+                <img src="/logo.png" alt="Logo" className="object-cover " />
               </div>
 
               <span className="text-2xl font-bold glow-text font-orbitron">
@@ -63,7 +63,7 @@ export default function Footer() {
             </p>
             <div className="flex space-x-4">
               <a href="tel:6300508035" className="text-cyan-300">
-                📞 6300508035
+                📞 +91-6300508035
               </a>
               <a
                 href="mailto:netxeventorganizer@gmail.com"

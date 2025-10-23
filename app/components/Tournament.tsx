@@ -161,11 +161,21 @@ export default function Tournament() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
               <div className="text-cyan-300 font-semibold mb-2">Suresh</div>
-              <div className="text-white text-lg">📞 6300508035</div>
+              <a
+                href="tel:+916300508035"
+                className="text-white text-lg hover:text-cyan-400 transition-colors"
+              >
+                📞 +91-6300508035
+              </a>
             </div>
             <div>
               <div className="text-cyan-300 font-semibold mb-2">Management</div>
-              <div className="text-white text-lg">📞 9010038666</div>
+              <a
+                href="tel:+919010038666"
+                className="text-white text-lg hover:text-cyan-400 transition-colors"
+              >
+                📞 +91-9010038666
+              </a>
             </div>
           </div>
 

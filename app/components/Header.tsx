@@ -55,11 +55,11 @@ export default function Header({
           {/* Logo */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="flex items-center space-x-3 cursor-pointer"
+            className="flex items-center cursor-pointer"
             onClick={() => handleNavigation("home")}
           >
             <div className="w-10 h-10 rounded-lg overflow-hidden flex items-center justify-center">
-              <img src="/logo.png" alt="Logo" className="object-cover h-14" />
+              <img src="/logo.png" alt="Logo" className="object-cover" />
             </div>
             <span className="text-xl font-bold glow-text font-orbitron">
               NetX
