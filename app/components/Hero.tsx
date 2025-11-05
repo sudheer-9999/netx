@@ -65,18 +65,6 @@ export default function Hero() {
             >
               Plan Your Event
             </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 border-2 border-cyan-500 text-cyan-400 font-bold rounded-lg text-lg w-full sm:w-auto hover:bg-cyan-500/10"
-              onClick={() =>
-                document
-                  .getElementById("tournament")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-            >
-              Serve & Flex 2025
-            </motion.button>
           </motion.div>
 
           {/* Quick Info Cards */}

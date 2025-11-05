@@ -127,7 +127,6 @@ export default function Home() {
         <Hero />
         <About />
         <Services />
-        <Tournament />
         <Contact />
       </main>
 
