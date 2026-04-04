@@ -1,5 +1,8 @@
 import "./globals.css";
-import { Orbitron, Exo_2 } from "next/font/google";
+import { Orbitron, Exo_2, Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -28,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${orbitron.variable} ${exo2.variable}`}>
+    <html lang="en" className={cn(orbitron.variable, exo2.variable, "font-sans", geist.variable)}>
       <body className="font-exo">{children}</body>
     </html>
   );

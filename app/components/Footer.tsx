@@ -118,7 +118,7 @@ export default function Footer() {
           whileInView={{ opacity: 1 }}
           className="border-t border-cyan-500/20 mt-8 pt-8 text-center text-cyan-200 text-sm"
         >
-          <p>&copy; 2025 NetX Event Organizers. All rights reserved.</p>
+          <p>&copy; 2026 NetX Event Organizers. All rights reserved.</p>
           <p className="mt-2">
             💻 Developed by{" "}
             <a
