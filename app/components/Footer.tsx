@@ -62,14 +62,11 @@ export default function Footer() {
               company organizing legendary events.
             </p>
             <div className="flex space-x-4">
-              <a href="tel:6300508035" className="text-cyan-300">
-                📞 +91-6300508035
+              <a href="tel:8328412214" className="text-cyan-300">
+                📞 +91-8328412214
               </a>
-              <a
-                href="mailto:netxeventorganizer@gmail.com"
-                className="text-cyan-300"
-              >
-                📧 netxeventorganizer@gmail.com
+              <a href="mailto:netxevents@outlook.com" className="text-cyan-300">
+                📧 netxevents@outlook.com
               </a>
             </div>
           </motion.div>

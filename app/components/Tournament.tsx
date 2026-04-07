@@ -162,10 +162,10 @@ export default function Tournament() {
             <div>
               <div className="text-cyan-300 font-semibold mb-2">Suresh</div>
               <a
-                href="tel:+916300508035"
+                href="tel:+918328412214"
                 className="text-white text-lg hover:text-cyan-400 transition-colors"
               >
-                📞 +91-6300508035
+                📞 +91-8328412214
               </a>
             </div>
             <div>

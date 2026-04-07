@@ -159,7 +159,7 @@ export default function Contact() {
 
                 <div className="space-y-4">
                   <a
-                    href="tel:+916300508035"
+                    href="tel:+918328412214"
                     className="flex items-center space-x-4  p-2 rounded-lg transition"
                   >
                     <div className="w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center">
@@ -168,14 +168,14 @@ export default function Contact() {
                     <div>
                       <div className="text-cyan-300 font-semibold">Phone</div>
                       <div className="text-white text-lg">
-                        +91-6300508035 (NetX)
+                        +91-8328412214 (NetX)
                       </div>
                     </div>
                   </a>
 
                   {/* Email Section */}
                   <a
-                    href="mailto:netxeventorganizer@gmail.com"
+                    href="mailto:netxevents@outlook.com"
                     className="flex items-center space-x-4  p-2 rounded-lg transition"
                   >
                     <div className="w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center">
@@ -184,7 +184,7 @@ export default function Contact() {
                     <div>
                       <div className="text-cyan-300 font-semibold">Email</div>
                       <div className="text-white text-lg">
-                        netxeventorganizer@gmail.com
+                        netxevents@outlook.com
                       </div>
                     </div>
                   </a>
