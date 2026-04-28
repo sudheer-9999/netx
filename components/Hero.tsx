@@ -19,22 +19,22 @@ export default function Hero() {
           autoPlay
           loop
           playsInline
-          preload="metadata"
-          className="h-full w-full object-cover"
+          preload="none"
+          poster="/logo.jpeg"
+          className="hidden md:block h-full w-full object-cover"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
-          <source src="/videos/cover.mp4" type="video/mp4" />
+          <source src="/videos/Video-4.mp4" type="video/mp4" />
         </motion.video>
         <div className="absolute inset-0 bg-black/50" />
       </div>
 
       <div className="absolute inset-x-0 bottom-2 left-0 right-0 w-full">
         <div className="mx-1 w-full max-w-7xl">
-          <div
+          <h1
             className="split-line-mask text-xl sm:text-xl lg:text-6xl leading-[1.05] sm:leading-[1.05] capitalize font-bold text-left"
-            aria-hidden="true"
             style={{
               position: "relative",
               display: "block",
@@ -55,14 +55,15 @@ export default function Hero() {
                 transform: "translate(0px, 0px)",
               }}
             >
-              Not Events. <br className="hidden sm:block" />
+              NetX Events: Not Events. <br className="hidden sm:block" />
               Experiences.
             </div>
-          </div>
+          </h1>
 
           {/* Subheadline */}
           <div className="mt-3 sm:mt-4 text-sm sm:text-base lg:text-xl text-white/80 max-w-3xl">
-            Jamming nights. Sports tournaments. Real people. Real vibes.
+            NetX Events brings jamming nights, sports tournaments, and
+            high-energy campus experiences for students and communities.
           </div>
 
           {/* CTAs */}

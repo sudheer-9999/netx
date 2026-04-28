@@ -30,8 +30,8 @@ export default function Footer() {
       title: "Connect",
       links: [
         {
-          name: "Instagram: @netx.eo",
-          href: "https://www.instagram.com/netx.eo?igsh=ZGo0dDk1NHdmbnpw",
+          name: "Instagram: @netx.events",
+          href: "https://www.instagram.com/netx.events?igsh=MWh6NXdhOG41N2tmeA==",
           external: true,
         },
       ],
@@ -50,11 +50,18 @@ export default function Footer() {
           >
             <div className="flex items-center mb-4">
               <div className="w-10 h-10 rounded-lg overflow-hidden flex items-center justify-center">
-                <img src="/logo.png" alt="Logo" className="object-cover " />
+                <Image
+                  src="/logo.jpeg"
+                  alt="NetX Events logo"
+                  width={40}
+                  height={40}
+                  className="object-cover"
+                  loading="lazy"
+                />
               </div>
 
               <span className="text-2xl font-bold glow-text font-orbitron">
-                NetX
+                NetX Events
               </span>
             </div>
             <p className="text-cyan-200 max-w-md mb-4">
@@ -115,7 +122,7 @@ export default function Footer() {
           whileInView={{ opacity: 1 }}
           className="border-t border-cyan-500/20 mt-8 pt-8 text-center text-cyan-200 text-sm"
         >
-          <p>&copy; 2026 NetX Event Organizers. All rights reserved.</p>
+          <p>&copy; 2026 NetX Events. All rights reserved.</p>
           <p className="mt-2">
             💻 Developed by{" "}
             <a

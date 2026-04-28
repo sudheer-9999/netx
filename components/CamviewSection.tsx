@@ -23,7 +23,7 @@ export const CamviewSection = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
-          <source src="/videos/Video-1.mp4" type="video/mp4" />
+          <source src="/videos/Video-5.mp4" type="video/mp4" />
         </motion.video>
         <div className="absolute inset-0 pointer-events-none">
           {/* corners */}

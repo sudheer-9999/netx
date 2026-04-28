@@ -58,7 +58,7 @@ export default function Header({
             onClick={() => handleNavigation("home")}
           >
             <div className="w-10 h-10 rounded-lg overflow-hidden flex items-center justify-center">
-              <img src="/logo.png" alt="Logo" className="object-cover" />
+              <img src="/logo.jpeg" alt="Logo" className="object-cover" />
             </div>
             <span className="text-xl font-bold glow-text font-orbitron">
               NetX
