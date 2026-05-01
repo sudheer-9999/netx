@@ -51,21 +51,31 @@ export default function MobileMenu({
       {/* Menu */}
       <ul className="flex flex-col mt-32 text-3xl font-bold uppercase">
         <li className="py-2">
-          <Link href="/" onClick={() => setOpen(false)}>Home</Link>
+          <Link href="/new#home" onClick={() => setOpen(false)}>Home</Link>
         </li>
 
         <li className="py-2">
-          <Link href="/portfolio" onClick={() => setOpen(false)}>
-            Portfolio <span className="text-base ml-2">[21]</span>
+          <Link href="/new#experiences" onClick={() => setOpen(false)}>
+            Experiences
           </Link>
         </li>
 
         <li className="py-2">
-          <Link href="/about" onClick={() => setOpen(false)}>About</Link>
+          <Link href="/new#upcoming" onClick={() => setOpen(false)}>
+            Happening Now
+          </Link>
         </li>
 
         <li className="py-2">
-          <Link href="/contact" onClick={() => setOpen(false)}>Contact</Link>
+          <Link href="/new#why-netx" onClick={() => setOpen(false)}>
+            Why NetX
+          </Link>
+        </li>
+
+        <li className="py-2">
+          <Link href="/new#partners" onClick={() => setOpen(false)}>
+            Collaborate
+          </Link>
         </li>
       </ul>
 

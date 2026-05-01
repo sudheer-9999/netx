@@ -21,8 +21,8 @@ const HappeningNow = () => {
               </h3>
               <ul className="mt-4 space-y-2 text-zinc-300">
                 <li>📍 Fun n Food, Kissan Ghat, Kurnool</li>
-                <li>📅 April 11</li>
-                <li>🕖 7 PM onwards</li>
+                <li>📅 May 9</li>
+                <li>🕖 6 PM onwards</li>
                 <li>🎟 Entry: ₹269</li>
               </ul>
               <div className="mt-4 inline-flex items-center gap-2 text-orange-400">
