@@ -13,6 +13,7 @@ import WhyNextX from "@/components/WhyNextX";
 import NewVideosSection from "@/components/NewVideosSection";
 import Footer from "../components/Footer";
 import HappeningNow from "@/components/HappeningNow";
+import PartnerWithNetX from "@/components/PartnerWithNetX";
 
 type ChatMessage = {
   sender: "user" | "assistant";
@@ -595,10 +596,10 @@ export default function NewHomePage() {
         </Section>
 
         {/* Upcoming Event */}
-        <Section id="upcoming" title="Happening Now">
+        {/* <Section id="upcoming" title="Happening Now">
           <HappeningNow />
 
-        </Section>
+        </Section> */}
 
         {/* Why NetX - Differentiation */}
         <Section id="why-netx" title="What Makes Us Different">
@@ -620,6 +621,8 @@ export default function NewHomePage() {
             </li>
           </ul>
         </Section>
+
+        <PartnerWithNetX />
 
         {/* For Colleges / Partners */}
         <Section id="partners" title="Bring NetX To Your Campus">

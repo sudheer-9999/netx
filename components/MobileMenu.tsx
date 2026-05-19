@@ -73,6 +73,12 @@ export default function MobileMenu({
         </li>
 
         <li className="py-2">
+          <Link href="/new#sponsors" onClick={() => setOpen(false)}>
+            Sponsor
+          </Link>
+        </li>
+
+        <li className="py-2">
           <Link href="/new#partners" onClick={() => setOpen(false)}>
             Collaborate
           </Link>

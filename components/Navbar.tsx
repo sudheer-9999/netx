@@ -60,6 +60,11 @@ export default function Navbar() {
               active={pathname === "/new" && hash === "#why-netx"}
             />
             <NavItem
+              href="/new#sponsors"
+              label="Sponsor"
+              active={pathname === "/new" && hash === "#sponsors"}
+            />
+            <NavItem
               href="/new#partners"
               label="Collaborate"
               active={pathname === "/new" && hash === "#partners"}
