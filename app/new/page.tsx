@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CamviewSection } from "@/components/CamviewSection";
 import CredView from "@/components/CredView";
 import FrameText from "@/components/FrameText";
@@ -329,8 +329,6 @@ const getAssistantResponse = (
 };
 
 export default function NewHomePage() {
-  const [showPosterModal, setShowPosterModal] = useState(false);
-  const [showAssistantPrompt, setShowAssistantPrompt] = useState(false);
   const [isAssistantMinimized, setIsAssistantMinimized] = useState(false);
   const [chatInput, setChatInput] = useState("");
   const [isThinking, setIsThinking] = useState(false);
@@ -341,16 +339,6 @@ export default function NewHomePage() {
       text: "AI Assistant is live 🚀 Got questions? Hit up the AI agent for anything about the event.",
     },
   ]);
-
-  useEffect(() => {
-    setShowPosterModal(true);
-  }, []);
-
-  const handlePosterClose = () => {
-    setShowPosterModal(false);
-    setShowAssistantPrompt(true);
-    setIsAssistantMinimized(false);
-  };
 
   const handleSendMessage = async () => {
     const question = chatInput.trim();
@@ -414,43 +402,9 @@ export default function NewHomePage() {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-linear-to-b from-zinc-950 via-black to-zinc-950 text-white">
-      {showPosterModal && (
-        <div className="fixed inset-0 z-120 flex items-center justify-center bg-black/80 px-4 py-8 backdrop-blur-sm">
-          <div className="relative w-full max-w-md rounded-xl border border-white/20 bg-zinc-950 p-3 shadow-2xl">
-            <button
-              type="button"
-              onClick={handlePosterClose}
-              className="absolute right-3 top-3 z-10 rounded-full border border-white/30 bg-black/50 px-2 py-1 text-xs text-white hover:bg-black/70"
-              aria-label="Close event poster"
-            >
-              Close
-            </button>
 
-            <div className="relative overflow-hidden rounded-lg border border-white/10">
-              <Image
-                src="/poster.jpeg"
-                alt="Madhuram Chapter 2 event poster"
-                width={700}
-                height={1050}
-                priority
-                className="h-auto w-full object-cover"
-              />
-            </div>
-
-            <a
-              href="https://konfhub.com/madhuram-chapter-2"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setShowPosterModal(false)}
-              className="mt-3 inline-flex w-full items-center justify-center rounded-md border border-orange-300/50 bg-orange-500/20 px-4 py-2.5 text-sm font-semibold text-orange-100 transition-colors hover:bg-orange-500/30"
-            >
-              Register on Konfhub
-            </a>
-          </div>
-        </div>
-      )}
-
-      {showAssistantPrompt && isAssistantMinimized && (
+      {/* NetX AI Assistant UI — hidden (change false to true to restore) */}
+      {false && isAssistantMinimized && (
         <button
           type="button"
           onClick={() => setIsAssistantMinimized(false)}
@@ -470,7 +424,7 @@ export default function NewHomePage() {
         </button>
       )}
 
-      {showAssistantPrompt && !isAssistantMinimized && (
+      {false && !isAssistantMinimized && (
         <div className="fixed bottom-5 right-4 z-110 w-[min(92vw,360px)] rounded-xl border border-cyan-300/30 bg-zinc-900/95 p-4 shadow-xl backdrop-blur">
           <div className="flex items-start gap-3">
             <div
@@ -508,11 +462,6 @@ export default function NewHomePage() {
                         : "bg-white/10 text-zinc-200"
                     }`}
                   >
-                    {/* {message.sender === "assistant" && message.source && (
-                      <div className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-cyan-300/90">
-                        {message.source === "llm" ? "LLM" : "Fallback"}
-                      </div>
-                    )} */}
                     {renderMessageWithLinks(message.text)}
                   </div>
                 ))}

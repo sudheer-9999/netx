@@ -276,9 +276,9 @@ export default function PartnerWithNetX() {
           >
             <Handshake className="h-9 w-9 text-amber-50" aria-hidden />
           </motion.div>
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-300/90">
+          {/* <p className="text-xs font-semibold uppercase tracking-[0.25em] text-amber-300/90">
             Partnerships
-          </p>
+          </p> */}
           <h2
             id="sponsors-title"
             className="mt-3 text-3xl font-bold text-white drop-shadow-md md:text-4xl lg:text-5xl"
