@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import type { EventInfo, EventMediaItem, EventPoster, EventStatus } from "@/lib/events";
 import { ADMIN_HEADER } from "@/lib/admin-auth";
@@ -294,12 +295,12 @@ const EventAdminPanel = () => {
           </p>
         </div>
         <div className="flex gap-2">
-          <a
+          <Link
             href="/"
             className="rounded-md border border-white/15 px-4 py-2 text-sm text-zinc-300 hover:bg-white/5"
           >
             View site
-          </a>
+          </Link>
           <button
             type="button"
             onClick={handleLogout}

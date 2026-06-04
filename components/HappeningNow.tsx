@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import ElectricBorder from "./UI/ElectricBorder";
-import EventMediaGallery from "./EventMediaGallery";
 import { formatTicketTiersLine, type EventInfo } from "@/lib/events";
 import { WHATSAPP_CHANNEL_LABEL, WHATSAPP_CHANNEL_URL } from "@/lib/site-links";
 

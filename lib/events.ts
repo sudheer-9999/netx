@@ -190,7 +190,9 @@ export const normalizeEvent = (raw: LegacyEventRaw): EventInfo => {
     media = media.filter((item) => item.url !== poster!.url);
   }
 
-  const { imageUrl: _i, videoUrl: _v, ...rest } = raw;
+  const rest = { ...raw };
+  delete rest.imageUrl;
+  delete rest.videoUrl;
   return { ...rest, poster, media };
 };
 

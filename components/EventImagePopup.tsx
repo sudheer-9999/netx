@@ -110,7 +110,6 @@ const EventImagePopup = () => {
                 autoplay
                 muted
                 loop
-                controls={false}
                 className="!mx-0 !w-full !max-w-none rounded-xl"
               />
             </div>

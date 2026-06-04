@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function Hero() {
@@ -68,12 +69,12 @@ export default function Hero() {
 
           {/* CTAs */}
           <div className="mt-5 sm:mt-7 flex flex-wrap gap-3">
-            <a
+            <Link
               href="/experiences"
               className="inline-flex items-center justify-center rounded-md border border-white/20 bg-white/5 px-5 py-2.5 text-white hover:bg-white/10 transition-colors"
             >
               ⚡ Explore What’s Happening
-            </a>
+            </Link>
           </div>
 
           <div className="mt-4 sm:mt-6 flex w-full md:justify-end">

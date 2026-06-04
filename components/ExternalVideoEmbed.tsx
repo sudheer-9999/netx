@@ -17,7 +17,6 @@ type ExternalVideoEmbedProps = {
   autoplay?: boolean;
   muted?: boolean;
   loop?: boolean;
-  controls?: boolean;
 };
 
 const ExternalVideoEmbed = ({
@@ -27,7 +26,6 @@ const ExternalVideoEmbed = ({
   autoplay = false,
   muted = true,
   loop = false,
-  controls = true,
 }: ExternalVideoEmbedProps) => {
   const provider = getExternalVideoProvider(url);
   const layout = isDirectVideoFileUrl(url)
