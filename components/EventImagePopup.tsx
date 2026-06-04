@@ -87,9 +87,16 @@ const EventImagePopup = () => {
         ? "max-w-md"
         : "max-w-lg";
 
+  const popupVideoClassName =
+    videoLayout === "vertical"
+      ? "!mx-auto !h-auto !max-h-[38dvh] !w-[min(100%,calc(38dvh*9/16))] !max-w-none rounded-xl sm:!max-h-[52dvh] sm:!w-[min(100%,calc(52dvh*9/16))]"
+      : videoLayout === "square"
+        ? "!mx-0 !max-h-[38dvh] !w-full !max-w-none rounded-xl sm:!max-h-[48dvh]"
+        : "!mx-0 !max-h-[38dvh] !w-full !max-w-none rounded-xl sm:!max-h-[50dvh]";
+
   return (
     <div
-      className="fixed inset-0 z-[10000001] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[10000001] flex items-center justify-center p-3 sm:p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="event-popup-title"
@@ -100,27 +107,39 @@ const EventImagePopup = () => {
         aria-label="Close event poster"
         onClick={closePopup}
       />
-      <div className={`relative z-10 w-full ${modalMaxWidth} scale-100 opacity-100 transition-all duration-300`}>
-        <div className="overflow-hidden rounded-2xl border border-cyan-300/30 bg-zinc-950 shadow-2xl shadow-cyan-500/10">
-          {popupMedia.type === "video" ? (
-            <div className="p-1">
-              <ExternalVideoEmbed
-                url={popupMedia.url}
-                title={title}
-                autoplay
-                muted
-                loop
-                className="!mx-0 !w-full !max-w-none rounded-xl"
+      <div
+        className={`relative z-10 flex max-h-[calc(100dvh-1.5rem)] w-full flex-col ${modalMaxWidth} scale-100 opacity-100 transition-all duration-300`}
+      >
+        <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl border border-cyan-300/30 bg-zinc-950 shadow-2xl shadow-cyan-500/10">
+          <button
+            type="button"
+            onClick={closePopup}
+            className="absolute right-2 top-2 z-20 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/20 bg-zinc-900/95 text-lg text-white shadow-lg backdrop-blur hover:bg-zinc-800"
+            aria-label="Close"
+          >
+            ×
+          </button>
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+            {popupMedia.type === "video" ? (
+              <div className="flex justify-center p-1 pt-10 sm:pt-1">
+                <ExternalVideoEmbed
+                  url={popupMedia.url}
+                  title={title}
+                  autoplay
+                  muted
+                  loop
+                  className={popupVideoClassName}
+                />
+              </div>
+            ) : (
+              <img
+                src={popupMedia.url}
+                alt={title}
+                className="max-h-[min(42dvh,480px)] w-full object-cover sm:max-h-[60vh]"
               />
-            </div>
-          ) : (
-            <img
-              src={popupMedia.url}
-              alt={title}
-              className="max-h-[70vh] w-full object-cover"
-            />
-          )}
-          <div className="border-t border-white/10 bg-zinc-950/95 px-5 py-4">
+            )}
+          </div>
+          <div className="shrink-0 border-t border-white/10 bg-zinc-950/95 px-4 py-3 sm:px-5 sm:py-4">
             <p id="event-popup-title" className="text-lg font-semibold text-white">
               {title}
             </p>
@@ -162,14 +181,6 @@ const EventImagePopup = () => {
             </button>
           </div>
         </div>
-        <button
-          type="button"
-          onClick={closePopup}
-          className="absolute -right-2 -top-2 flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-zinc-900 text-lg text-white shadow-lg hover:bg-zinc-800"
-          aria-label="Close"
-        >
-          ×
-        </button>
       </div>
     </div>
   );

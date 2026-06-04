@@ -477,7 +477,6 @@ export default function NewHomePage() {
         <Hero />
         <CredView />
         <CamviewSection />
-        <NewVideosSection />
         <ScrollText />
         {/* <InfiniteImages /> */}
         <FrameText />
