@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "id": "dfghdfsgh",
+    "name": "dfghdfsgh",
+    "subtitle": "sdhdgfh",
+    "dateLabel": "dsfghdfsgh",
+    "isoDate": "2026-06-04T05:26:59.747Z",
+    "timeLabel": "dfsghdgfh",
+    "venue": "fdghfdg",
+    "venueAddress": "dgshdgfsh",
+    "city": "hfdgh",
+    "mapLink": "fdghfdgh",
+    "ticketTiers": [
+      {
+        "price": "sdgfhfdgh",
+        "label": "fdghfdgh"
+      }
+    ],
+    "registrationLink": "dgfhgfdhs",
+    "districtLink": "gdfhfdgh",
+    "gatesOpenLabel": "fdsgfsdg",
+    "status": "upcoming",
+    "ticketTierName": "sdfghdfsgh",
+    "ticketTierDescription": "dgsfhdgfsgsdh",
+    "availableTillLabel": "gdfshfdgh",
+    "ticketsLeft": 50,
+    "dressCode": "dshdfgs",
+    "features": [
+      "hfdgshgfdsh"
+    ],
+    "poster": null,
+    "media": []
+  }
+]

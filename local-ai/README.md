@@ -35,13 +35,14 @@ Manage events in the browser at **`/admin`**:
 2. Run `npm run dev` and open [http://localhost:3000/admin](http://localhost:3000/admin)
 3. Create, edit, upload posters, set status (`active` / `upcoming` / `completed`), and delete events
 
-Changes are saved to `local-ai/events.json` and appear on the site immediately (popup + Happening Now only for `active` / `upcoming`).
+Changes are saved to **Vercel Blob** (`BLOB_READ_WRITE_TOKEN` in `.env` or `.env.local`) and appear on the site immediately (popup + Happening Now only for `active` / `upcoming`). Bundled `local-ai/events.json` is only used as a fallback until the blob store is seeded.
 
 ## Cloudinary (images only)
 
 Add to `.env.local` (see `.env.example`):
 
 ```env
+BLOB_READ_WRITE_TOKEN=your_blob_read_write_token
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret

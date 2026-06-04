@@ -26,7 +26,7 @@ export async function parseApiJson<T extends { error?: string }>(
       data: null,
       error: res.ok
         ? "Invalid response from server."
-        : `Server error (${res.status}). If this is production, ensure BLOB_READ_WRITE_TOKEN is set in Vercel.`,
+        : `Server error (${res.status}). Ensure BLOB_READ_WRITE_TOKEN is set in your environment.`,
     };
   }
 }
