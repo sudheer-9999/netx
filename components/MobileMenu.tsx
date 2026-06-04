@@ -55,7 +55,7 @@ export default function MobileMenu({
         </li>
 
         <li className="py-2">
-          <Link href="/new#experiences" onClick={() => setOpen(false)}>
+          <Link href="/experiences" onClick={() => setOpen(false)}>
             Experiences
           </Link>
         </li>

@@ -45,9 +45,9 @@ export default function Navbar() {
               active={pathname === "/new" && (hash === "" || hash === "#home")}
             />
             <NavItem
-              href="/new#experiences"
+              href="/experiences"
               label="Experiences"
-              active={pathname === "/new" && hash === "#experiences"}
+              active={pathname.startsWith("/experiences")}
             />
             <NavItem
               href="/new#upcoming"

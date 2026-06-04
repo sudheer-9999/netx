@@ -1,6 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
+import {
+  WHATSAPP_CHANNEL_LABEL,
+  WHATSAPP_CHANNEL_URL,
+} from "@/lib/site-links";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -32,6 +36,11 @@ export default function Footer() {
         {
           name: "Instagram: @netx.events",
           href: "https://www.instagram.com/netx.events?igsh=MWh6NXdhOG41N2tmeA==",
+          external: true,
+        },
+        {
+          name: WHATSAPP_CHANNEL_LABEL,
+          href: WHATSAPP_CHANNEL_URL,
           external: true,
         },
       ],

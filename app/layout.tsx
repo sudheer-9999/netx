@@ -96,7 +96,10 @@ export default function RootLayout({
     logo: `${siteUrl}/logo.jpeg`,
     email: "netxevents@outlook.com",
     telephone: "+91-8328412214",
-    sameAs: ["https://www.instagram.com/netx.events"],
+    sameAs: [
+      "https://www.instagram.com/netx.events",
+      "https://whatsapp.com/channel/0029VbCNYkc47XeDrB7jfu1x",
+    ],
   };
   const websiteJsonLd = {
     "@context": "https://schema.org",

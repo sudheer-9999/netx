@@ -19,9 +19,9 @@ export default function Hero() {
           autoPlay
           loop
           playsInline
-          preload="none"
+          preload="auto"
           poster="/logo.jpeg"
-          className="hidden md:block h-full w-full object-cover"
+          className="h-full w-full object-cover"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
@@ -69,7 +69,7 @@ export default function Hero() {
           {/* CTAs */}
           <div className="mt-5 sm:mt-7 flex flex-wrap gap-3">
             <a
-              href="#experiences"
+              href="/experiences"
               className="inline-flex items-center justify-center rounded-md border border-white/20 bg-white/5 px-5 py-2.5 text-white hover:bg-white/10 transition-colors"
             >
               ⚡ Explore What’s Happening

@@ -1,31 +1,18 @@
-import eventsData from "@/local-ai/events.json";
+import {
+  EventInfo,
+  formatBookingLinks,
+  formatTicketTiersLine,
+  parseRupeeValue,
+} from "@/lib/events";
+import { getLiveEvent } from "@/lib/events-store";
+
+export type { EventInfo } from "@/lib/events";
 
 export type AssistantRole = "user" | "assistant";
 
 export type ChatTurn = {
   role: AssistantRole;
   content: string;
-};
-
-type EventStatus = "active" | "upcoming" | "completed";
-
-export type EventInfo = {
-  id: string;
-  name: string;
-  dateLabel: string;
-  isoDate: string;
-  timeLabel: string;
-  venue: string;
-  city: string;
-  mapLink: string;
-  ticketPrice: string;
-  earlyBirdPrice: string;
-  registrationLink: string;
-  status: EventStatus;
-  ticketTierName: string;
-  ticketTierDescription: string;
-  availableTillLabel: string;
-  ticketsLeft: number;
 };
 
 export type IntentKey =
@@ -47,9 +34,7 @@ type IntentDefinition = {
   buildResponse: (event: EventInfo, question: string) => string;
 };
 
-const EVENTS = eventsData as EventInfo[];
-
-const CONTACT_PHONE = "8688202425";
+const CONTACT_PHONE = "8328412214";
 const CONTACT_EMAIL = "netxevents@outlook.com";
 
 // Words that hint the user is continuing from a prior topic
@@ -84,8 +69,6 @@ const similarity = (a: string, b: string) => {
   const y = b.toLowerCase();
   return x.includes(y) || y.includes(x);
 };
-
-const parseRupeeValue = (value: string) => Number(value.replace(/[^\d]/g, ""));
 
 const formatRupees = (amount: number) => `₹${amount.toLocaleString("en-IN")}`;
 
@@ -130,46 +113,29 @@ const extractMemberCount = (question: string): number | null => {
 
 const buildPriceResponse = (event: EventInfo, question: string): string => {
   const memberCount = extractMemberCount(question);
+  const tierLines = event.ticketTiers.map(
+    (tier) => `${tier.price} — **${tier.label}**`,
+  );
 
-  if (/worth|value|good deal|is it cheap/i.test(question)) {
-    const saved =
-      parseRupeeValue(event.ticketPrice) -
-      parseRupeeValue(event.earlyBirdPrice);
-    return `ngl it's a total steal 😭🔥 early bird saves you ${formatRupees(saved)} per person — that's literally a free meal bro. cop it before it's gone!\n\n🔗 ${event.registrationLink}`;
+  if (/worth|value|good deal|is it cheap/i.test(question) && event.ticketTiers.length >= 2) {
+    const [first, second] = event.ticketTiers;
+    const extra = parseRupeeValue(second.price) - parseRupeeValue(first.price);
+    return `ngl both passes are a steal 😭🔥 the ${second.label} pass is only ${formatRupees(extra)} more — that's basically food + vibes included. cop it before it's gone!\n\n${formatBookingLinks(event)}`;
   }
 
   if (!memberCount || memberCount < 2) {
-    return `aight here's the tea on pricing for **${event.name}** 💸\n\nRegular: ${event.ticketPrice}\n🔥 Early Bird (limited!!): ${event.earlyBirdPrice}\n\n${urgencyBar(event.ticketsLeft)} · ${event.ticketsLeft} tickets left\n🔗 ${event.registrationLink}`;
+    return `aight here's the tea on pricing for **${event.name}** 💸\n\n${tierLines.join("\n")}\n\n${urgencyBar(event.ticketsLeft)} · ${event.ticketsLeft} tickets left\n${formatBookingLinks(event)}`;
   }
 
-  const regular = parseRupeeValue(event.ticketPrice) * memberCount;
-  const earlyBird = parseRupeeValue(event.earlyBirdPrice) * memberCount;
-  const savings = regular - earlyBird;
+  const squadLines = event.ticketTiers.map((tier) => {
+    const total = parseRupeeValue(tier.price) * memberCount;
+    return `${tier.label}: ${formatRupees(total)}`;
+  });
 
-  return `squad of **${memberCount}**? let's go!! 🫂\n\nRegular (don't be this guy): ${formatRupees(regular)}\n🔥 Early Bird (smart move): ${formatRupees(earlyBird)}\n💰 u save: ${formatRupees(savings)} — that's on us fr\n\n${urgencyBar(event.ticketsLeft)} · only ${event.ticketsLeft} spots left bestie\n🔗 ${event.registrationLink}`;
+  return `squad of **${memberCount}**? let's go!! 🫂\n\n${squadLines.join("\n")}\n\n${urgencyBar(event.ticketsLeft)} · only ${event.ticketsLeft} spots left bestie\n${formatBookingLinks(event)}`;
 };
 
-// ---------------------------------------------------------------------------
-// Active event resolution
-// ---------------------------------------------------------------------------
-
-export const getLiveEvent = (): EventInfo => {
-  const active = EVENTS.find((e) => e.status === "active");
-  if (active) return active;
-
-  const now = Date.now();
-  const upcoming = [...EVENTS]
-    .filter((e) => new Date(e.isoDate).getTime() >= now)
-    .sort(
-      (a, b) => new Date(a.isoDate).getTime() - new Date(b.isoDate).getTime(),
-    )[0];
-
-  if (upcoming) return upcoming;
-
-  return [...EVENTS].sort(
-    (a, b) => new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime(),
-  )[0];
-};
+export { getLiveEvent };
 
 // ---------------------------------------------------------------------------
 // Welcome message (call this when chat first opens)
@@ -177,6 +143,9 @@ export const getLiveEvent = (): EventInfo => {
 
 export const getWelcomeMessage = (): string => {
   const event = getLiveEvent();
+  if (!event) {
+    return `yo bestie 👋✨ welcome to NetX!\n\nno live events on the calendar rn — we're cooking the next one 🔥 hit us up for collabs or follow @netx.events for drops`;
+  }
   return `yo bestie 👋✨ welcome to NetX!\n\n**${event.name}** is literally around the corner and it's gonna go crazy 🔥 ask me anything — tickets, venue, vibes, all of it. what's good?`;
 };
 
@@ -259,7 +228,7 @@ const INTENT_DEFINITIONS: Record<
       "show event",
     ],
     buildResponse: (event) =>
-      `okay so THIS is the one 🫨🔥\n\n**${event.name}**\n📅 ${event.dateLabel}\n⏰ ${event.timeLabel}\n📍 ${event.venue}, ${event.city}\n💸 ${event.ticketPrice} · Early Bird: ${event.earlyBirdPrice}\n🎟 ${event.ticketsLeft} tickets left (not a lot ngl)\n🔗 ${event.registrationLink}`,
+      `okay so THIS is the one 🫨🔥\n\n**${event.name}**${event.subtitle ? ` — ${event.subtitle}` : ""}\n📅 ${event.dateLabel}\n⏰ ${event.gatesOpenLabel ? `Gates ${event.gatesOpenLabel} · ` : ""}${event.timeLabel}\n📍 ${event.venue}, ${event.city}\n💸 ${formatTicketTiersLine(event.ticketTiers)}\n🎟 ${event.ticketsLeft} tickets left (not a lot ngl)\n${formatBookingLinks(event)}`,
   },
 
   greeting: {
@@ -340,6 +309,8 @@ const INTENT_DEFINITIONS: Record<
       "booking",
       "book",
       "join",
+      "konfhub",
+      "district",
       "link",
       "sign up",
       "sign-up",
@@ -349,7 +320,7 @@ const INTENT_DEFINITIONS: Record<
       "enroll",
     ],
     buildResponse: (event) =>
-      `locking in ur spot rn is the only correct move 🎟🔥\n\n👉 ${event.registrationLink}\n\n⚠️ psa: early bird at ${event.earlyBirdPrice} is literally flying — only ${event.ticketsLeft} left. don't cry abt it later bestie`,
+      `locking in ur spot rn is the only correct move 🎟🔥\n\n${formatBookingLinks(event)}\n\n⚠️ psa: tickets from ${event.ticketTiers[0]?.price ?? "the listed price"} — only ${event.ticketsLeft} left. don't cry abt it later bestie`,
   },
 
   availability: {
@@ -364,7 +335,7 @@ const INTENT_DEFINITIONS: Record<
       "seats",
     ],
     buildResponse: (event) =>
-      `${urgencyBar(event.ticketsLeft)}\n\n**${event.ticketsLeft} tickets** still up for grabs 👀\n⏳ available till ${event.availableTillLabel}\n\nthe clock is literally ticking rn → ${event.registrationLink}`,
+      `${urgencyBar(event.ticketsLeft)}\n\n**${event.ticketsLeft} tickets** still up for grabs 👀\n⏳ available till ${event.availableTillLabel}\n\nthe clock is literally ticking rn:\n${formatBookingLinks(event)}`,
   },
 
   contact: {
@@ -416,6 +387,8 @@ export const fallbackIntentResponse = (
 ): { response: string; intent: IntentKey } => {
   const question = rawQuestion.trim().toLowerCase();
   const liveEvent = getLiveEvent();
+  const noLiveEventMessage =
+    "no active or upcoming events on NetX right now 🫶 we're planning the next drop — follow @netx.events or ask how to reach the team";
 
   if (!question) {
     return {
@@ -448,32 +421,42 @@ export const fallbackIntentResponse = (
 
   // Use best match if confident
   if (bestMatch && bestMatch.score >= 2) {
+    if (!liveEvent && bestMatch.intent !== "contact") {
+      return { response: noLiveEventMessage, intent: "out_of_context" };
+    }
+
     const builder =
       bestMatch.intent === "price"
         ? buildPriceResponse
         : INTENT_DEFINITIONS[bestMatch.intent].buildResponse;
 
     return {
-      response: builder(liveEvent, question),
+      response: builder(liveEvent!, question),
       intent: bestMatch.intent,
     };
   }
 
   // Fall back to last intent if user seems to be following up
   if (isFollowUp && lastIntent && lastIntent !== "out_of_context") {
+    if (!liveEvent && lastIntent !== "contact") {
+      return { response: noLiveEventMessage, intent: "out_of_context" };
+    }
+
     const builder =
       lastIntent === "price"
         ? buildPriceResponse
         : INTENT_DEFINITIONS[lastIntent]?.buildResponse;
 
     if (builder) {
-      return { response: builder(liveEvent, question), intent: lastIntent };
+      return { response: builder(liveEvent!, question), intent: lastIntent };
     }
   }
 
   // Friendly dead-end with actionable suggestions
   return {
-    response: `okay ngl i'm a lil lost rn 😭 didn't quite catch that\n\nbut i CAN help u with:\n• ticket prices & early bird deals\n• event date, time & venue\n• how to register\n• contact the team\n\njust drop ur q and i gotchu fr 🫶 (it's about **${liveEvent.name}** btw)`,
+    response: liveEvent
+      ? `okay ngl i'm a lil lost rn 😭 didn't quite catch that\n\nbut i CAN help u with:\n• ticket prices & early bird deals\n• event date, time & venue\n• how to register\n• contact the team\n\njust drop ur q and i gotchu fr 🫶 (it's about **${liveEvent.name}** btw)`
+      : noLiveEventMessage,
     intent: "out_of_context",
   };
 };

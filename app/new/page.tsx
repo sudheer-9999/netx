@@ -12,8 +12,17 @@ import Section from "@/components/Section";
 import WhyNextX from "@/components/WhyNextX";
 import NewVideosSection from "@/components/NewVideosSection";
 import Footer from "../components/Footer";
+import EventImagePopup from "@/components/EventImagePopup";
 import HappeningNow from "@/components/HappeningNow";
+import ExperiencesSection from "@/components/ExperiencesSection";
 import PartnerWithNetX from "@/components/PartnerWithNetX";
+import {
+  type EventInfo,
+  formatBookingLinks,
+  formatTicketTiersLine,
+  getLiveEvent,
+  parseRupeeValue,
+} from "@/lib/events";
 
 type ChatMessage = {
   sender: "user" | "assistant";
@@ -21,10 +30,7 @@ type ChatMessage = {
   source?: "llm" | "fallback";
 };
 
-const EVENT_LINK = "https://konfhub.com/madhuram-chapter-2";
-const EVENT_MAP_LINK =
-  "https://www.google.com/maps/place/Biryanis+%26+Barbecues+FOOD+RESTAURANT+AND+BANQUET+HALL/@15.8240418,78.034094,17z/data=!3m1!4b1!4m6!3m5!1s0x3bb5ddf60e33eb1d:0xee8df0c7a9c74a64!8m2!3d15.8240418!4d78.0366689!16s%2Fg%2F11bwq96b22?entry=ttu&g_ep=EgoyMDI2MDQyNi4wIKXMDSoASAFQAw%3D%3D";
-const CONTACT_PHONE = "8688202425";
+const CONTACT_PHONE = "8328412214";
 const CONTACT_EMAIL = "netxevents@outlook.com";
 
 type IntentKey =
@@ -46,65 +52,6 @@ type IntentDefinition = {
   buildResponse: (event: EventInfo) => string;
 };
 
-type EventInfo = {
-  id: string;
-  name: string;
-  dateLabel: string;
-  isoDate: string;
-  timeLabel: string;
-  venue: string;
-  city: string;
-  mapLink: string;
-  ticketPrice: string;
-  earlyBirdPrice: string;
-  registrationLink: string;
-  status: "active" | "upcoming" | "completed";
-  ticketTierName: string;
-  ticketTierDescription: string;
-  availableTillLabel: string;
-  ticketsLeft: number;
-};
-
-const EVENTS: EventInfo[] = [
-  {
-    id: "madhuram-chapter-2",
-    name: "Madhuram Chapter 2",
-    dateLabel: "9th May (Saturday)",
-    isoDate: "2026-05-09T18:00:00+05:30",
-    timeLabel: "6 PM onwards",
-    venue: "Biryanis & Barbecues Food Restaurant and Banquet Hall",
-    city: "Kurnool",
-    mapLink: EVENT_MAP_LINK,
-    ticketPrice: "₹269",
-    earlyBirdPrice: "₹200",
-    registrationLink: EVENT_LINK,
-    status: "active",
-    ticketTierName: "Madhuram - chapter 2 early bird",
-    ticketTierDescription:
-      "Your entry to Madhuram Chapter 2 - an evening packed with music, vibes, and good company.",
-    availableTillLabel: "9th May 2026, 09:00 PM (GMT+05:30)",
-    ticketsLeft: 2,
-  },
-];
-
-const getLiveEvent = (): EventInfo => {
-  const active = EVENTS.find((event) => event.status === "active");
-  if (active) return active;
-
-  const now = Date.now();
-  const upcoming = [...EVENTS]
-    .filter((event) => new Date(event.isoDate).getTime() >= now)
-    .sort(
-      (a, b) =>
-        new Date(a.isoDate).getTime() - new Date(b.isoDate).getTime(),
-    )[0];
-  if (upcoming) return upcoming;
-
-  return [...EVENTS].sort(
-    (a, b) => new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime(),
-  )[0];
-};
-
 const formatEventHeadline = (event: EventInfo) =>
   `${event.name} is the current live/active event. Date: ${event.dateLabel}, Time: ${event.timeLabel}, Venue: ${event.venue}, ${event.city}. Map: ${event.mapLink}`;
 
@@ -123,7 +70,7 @@ const INTENT_DEFINITIONS: Record<
       "now event",
     ],
     buildResponse: (event) =>
-      `${formatEventHeadline(event)} Regular price is ${event.ticketPrice}, and early bird offer is ${event.earlyBirdPrice}. Only ${event.ticketsLeft} tickets left, grab your spot as soon as possible. Available till ${event.availableTillLabel}. Register here: ${event.registrationLink}`,
+      `${formatEventHeadline(event)} Ticket options: ${formatTicketTiersLine(event.ticketTiers)}. Only ${event.ticketsLeft} tickets left, grab your spot as soon as possible. Available till ${event.availableTillLabel}. Book here:\n${formatBookingLinks(event)}`,
   },
   greeting: {
     keywords: ["hi", "hello", "hey", "good morning", "good evening"],
@@ -146,12 +93,12 @@ const INTENT_DEFINITIONS: Record<
   price: {
     keywords: ["price", "entry", "ticket", "cost", "fee", "amount", "rupees"],
     buildResponse: (event) =>
-      `Regular entry fee for ${event.name} is ${event.ticketPrice}. Early bird offer is ${event.earlyBirdPrice}. Tier: ${event.ticketTierName}. Only ${event.ticketsLeft} early-bird tickets are available, so grab your spot as soon as possible. Available till ${event.availableTillLabel}. Reserve your seat on Konfhub: ${event.registrationLink}`,
+      `Ticket options for ${event.name}: ${formatTicketTiersLine(event.ticketTiers)}. Only ${event.ticketsLeft} tickets are available, so grab your spot as soon as possible. Available till ${event.availableTillLabel}. Book here:\n${formatBookingLinks(event)}`,
   },
   registration: {
-    keywords: ["register", "registration", "book", "booking", "konfhub", "link", "join"],
+    keywords: ["register", "registration", "book", "booking", "konfhub", "district", "link", "join", "tickets"],
     buildResponse: (event) =>
-      `You can register for ${event.name} securely here: ${event.registrationLink}. ${event.ticketTierName} (early bird ${event.earlyBirdPrice}, regular ${event.ticketPrice}) is available till ${event.availableTillLabel}.`,
+      `You can register for ${event.name} here:\n${formatBookingLinks(event)}. Passes: ${formatTicketTiersLine(event.ticketTiers)}. Available till ${event.availableTillLabel}.`,
   },
   availability: {
     keywords: [
@@ -165,7 +112,7 @@ const INTENT_DEFINITIONS: Record<
       "all access vibes",
     ],
     buildResponse: (event) =>
-      `${event.ticketTierName}: ${event.ticketTierDescription} Regular price: ${event.ticketPrice}. Early bird offer: ${event.earlyBirdPrice}. Only ${event.ticketsLeft} early-bird tickets available, grab as soon as possible. Available till ${event.availableTillLabel}. Once this phase is gone, it is gone.`,
+      `${event.ticketTierName}: ${event.ticketTierDescription} Passes: ${formatTicketTiersLine(event.ticketTiers)}. Only ${event.ticketsLeft} tickets available, grab as soon as possible. Available till ${event.availableTillLabel}. Once this phase is gone, it is gone.`,
   },
   contact: {
     keywords: ["contact", "phone", "call", "email", "whatsapp", "support number"],
@@ -192,8 +139,6 @@ const tokenize = (text: string) =>
     .replace(/[^a-z0-9\s]/g, " ")
     .split(/\s+/)
     .filter(Boolean);
-
-const parseRupeeValue = (value: string) => Number(value.replace(/[^\d]/g, ""));
 
 const MEMBER_WORD_TO_COUNT: Record<string, number> = {
   one: 1,
@@ -226,9 +171,11 @@ const buildPriceResponse = (event: EventInfo, question: string) => {
     return INTENT_DEFINITIONS.price.buildResponse(event);
   }
 
-  const regular = parseRupeeValue(event.ticketPrice) * memberCount;
-  const earlyBird = parseRupeeValue(event.earlyBirdPrice) * memberCount;
-  return `For ${memberCount} members, regular total is ₹${regular} (${event.ticketPrice} each) and early bird total is ₹${earlyBird} (${event.earlyBirdPrice} each). Only ${event.ticketsLeft} early-bird tickets are available. Register here: ${event.registrationLink}`;
+  const totals = event.ticketTiers.map((tier) => {
+    const total = parseRupeeValue(tier.price) * memberCount;
+    return `${tier.label}: ₹${total} (${tier.price} each)`;
+  });
+  return `For ${memberCount} members:\n${totals.join("\n")}\nOnly ${event.ticketsLeft} tickets are available. Book here:\n${formatBookingLinks(event)}`;
 };
 
 const renderMessageWithLinks = (message: string) => {
@@ -259,6 +206,8 @@ const getAssistantResponse = (
 ): { response: string; intent: IntentKey } => {
   const question = rawQuestion.trim().toLowerCase();
   const liveEvent = getLiveEvent();
+  const noLiveEventMessage =
+    "There are no active or upcoming NetX events right now. Please check back later or ask for contact details.";
 
   if (!question) {
     return {
@@ -289,24 +238,32 @@ const getAssistantResponse = (
   const matchedKnownIntent = best.score > 0;
 
   if (matchedKnownIntent) {
+    if (!liveEvent && best.intent !== "contact") {
+      return { response: noLiveEventMessage, intent: "out_of_context" };
+    }
+
     if (best.intent === "price") {
       return {
-        response: buildPriceResponse(liveEvent, question),
+        response: buildPriceResponse(liveEvent!, question),
         intent: best.intent,
       };
     }
 
     return {
-      response: INTENT_DEFINITIONS[best.intent].buildResponse(liveEvent),
+      response: INTENT_DEFINITIONS[best.intent].buildResponse(liveEvent!),
       intent: best.intent,
     };
   }
 
   if (followUp && lastIntent && lastIntent !== "out_of_context") {
+    if (!liveEvent && lastIntent !== "contact") {
+      return { response: noLiveEventMessage, intent: "out_of_context" };
+    }
+
     if (lastIntent === "price") {
       return {
         response: `${buildPriceResponse(
-          liveEvent,
+          liveEvent!,
           question,
         )} If you need anything else, I can also share registration and contact details.`,
         intent: lastIntent,
@@ -315,7 +272,7 @@ const getAssistantResponse = (
 
     return {
       response: `${INTENT_DEFINITIONS[lastIntent].buildResponse(
-        liveEvent,
+        liveEvent!,
       )} If you need anything else, I can also share registration and contact details.`,
       intent: lastIntent,
     };
@@ -402,9 +359,9 @@ export default function NewHomePage() {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-linear-to-b from-zinc-950 via-black to-zinc-950 text-white">
+      <EventImagePopup />
 
-      {/* NetX AI Assistant UI — hidden (change false to true to restore) */}
-      {false && isAssistantMinimized && (
+      {isAssistantMinimized && (
         <button
           type="button"
           onClick={() => setIsAssistantMinimized(false)}
@@ -424,7 +381,7 @@ export default function NewHomePage() {
         </button>
       )}
 
-      {false && !isAssistantMinimized && (
+      {!isAssistantMinimized && (
         <div className="fixed bottom-5 right-4 z-110 w-[min(92vw,360px)] rounded-xl border border-cyan-300/30 bg-zinc-900/95 p-4 shadow-xl backdrop-blur">
           <div className="flex items-start gap-3">
             <div
@@ -497,7 +454,8 @@ export default function NewHomePage() {
                 {[
                   "Where is the venue?",
                   "What is ticket price?",
-                  "Share registration link",
+                  "Share Konfhub link",
+                  "Share District link",
                 ].map((suggestion) => (
                   <button
                     key={suggestion}
@@ -526,29 +484,17 @@ export default function NewHomePage() {
         <WhyNextX />
         
         {/* Experiences */}
-        <Section id="experiences" title="What We Do">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="rounded-lg border border-white/10 p-6 bg-white/5">
-              <h3 className="text-xl font-semibold">🎸 Madhuram – Jamming Sessions</h3>
-              <p className="mt-2 text-sm text-zinc-400">
-                Sing, vibe, and lose yourself in music. No stage fear. No judgment. Just a room full
-                of people singing together.
-              </p>
-            </div>
-            <div className="rounded-lg border border-white/10 p-6 bg-white/5">
-              <h3 className="text-xl font-semibold">🎤 Open Experiences (Coming Soon)</h3>
-              <p className="mt-2 text-sm text-zinc-400">
-                From open mics to creative nights — we’re just getting started.
-              </p>
-            </div>
-          </div>
+        <Section
+          id="experiences"
+          title="Experiences"
+          subtitle="Browse every NetX event — tap to explore reels and photos"
+        >
+          <ExperiencesSection featuredOnly />
         </Section>
 
-        {/* Upcoming Event */}
-        {/* <Section id="upcoming" title="Happening Now">
+        <Section id="upcoming" title="Happening Now">
           <HappeningNow />
-
-        </Section> */}
+        </Section>
 
         {/* Why NetX - Differentiation */}
         <Section id="why-netx" title="What Makes Us Different">

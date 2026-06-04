@@ -1,20 +1,144 @@
 [
   {
-    "id": "madhuram-chapter-2",
-    "name": "Madhuram Chapter 2",
-    "dateLabel": "9th May (Saturday)",
-    "isoDate": "2026-05-09T18:00:00+05:30",
-    "timeLabel": "6 PM onwards",
-    "venue": "Biryanis & Barbecues Food Restaurant and Banquet Hall",
-    "city": "Kurnool",
-    "mapLink": "https://www.google.com/maps/place/Biryanis+%26+Barbecues+FOOD+RESTAURANT+AND+BANQUET+HALL/@15.8240418,78.034094,17z/data=!3m1!4b1!4m6!3m5!1s0x3bb5ddf60e33eb1d:0xee8df0c7a9c74a64!8m2!3d15.8240418!4d78.0366689!16s%2Fg%2F11bwq96b22?entry=ttu&g_ep=EgoyMDI2MDQyNi4wIKXMDSoASAFQAw%3D%3D",
-    "ticketPrice": "₹269",
-    "earlyBirdPrice": "₹200",
-    "registrationLink": "https://konfhub.com/madhuram-chapter-2",
+    "id": "vhbvd",
+    "name": "vhbvd",
+    "subtitle": "dfghdfgh",
+    "dateLabel": "gfdhg",
+    "isoDate": "2026-06-24T03:52:00.000Z",
+    "timeLabel": "gfdhfdg",
+    "venue": "gfsdh",
+    "venueAddress": "gfdshfdgsh",
+    "city": "gfdshfsdgh",
+    "mapLink": "gfdhfgdh",
+    "ticketTiers": [
+      {
+        "price": "₹4475",
+        "label": "hjfhgj"
+      }
+    ],
+    "registrationLink": "https://www.youtube.com/watch?v=dESIGVxSSCE&list=RDF2m4HPLvj-4&index=7",
+    "districtLink": "https://www.youtube.com/watch?v=dESIGVxSSCE&list=RDF2m4HPLvj-4&index=7",
+    "gatesOpenLabel": "gfdhgfd",
+    "status": "completed",
+    "ticketTierName": "fghfg",
+    "ticketTierDescription": "fghj",
+    "availableTillLabel": "gfdhfdgh",
+    "ticketsLeft": 50,
+    "dressCode": "tehgf",
+    "features": [
+      "gfdhfdg"
+    ],
+    "poster": null,
+    "media": [
+      {
+        "id": "video-1780547658752-lju2qn",
+        "type": "video",
+        "url": "https://www.instagram.com/p/DYjyNdGTc6k/",
+        "publicId": ""
+      },
+      {
+        "id": "video-1780547712941-sv2wtt",
+        "type": "video",
+        "url": "https://www.instagram.com/p/DYXSDCbzp_q/",
+        "publicId": ""
+      },
+      {
+        "id": "video-1780547736918-cfv3vg",
+        "type": "video",
+        "url": "https://www.instagram.com/p/DYH5yrhplVA/",
+        "publicId": ""
+      },
+      {
+        "id": "video-1780547993611-x6txi4",
+        "type": "video",
+        "url": "https://www.instagram.com/p/DYNS366T7y2/",
+        "publicId": ""
+      },
+      {
+        "id": "video-1780548008831-xej15s",
+        "type": "video",
+        "url": "https://www.instagram.com/p/DX8FX7cSnLr/",
+        "publicId": ""
+      },
+      {
+        "id": "video-1780548027644-2hwcz0",
+        "type": "video",
+        "url": "https://www.instagram.com/p/DX1oesizOEP/",
+        "publicId": ""
+      },
+      {
+        "id": "video-1780548046882-zpht95",
+        "type": "video",
+        "url": "https://www.instagram.com/p/DX1oesizOEP/",
+        "publicId": ""
+      },
+      {
+        "id": "video-1780548049190-en5ym9",
+        "type": "video",
+        "url": "https://www.instagram.com/p/DX1oesizOEP/",
+        "publicId": ""
+      },
+      {
+        "id": "video-1780548051028-lfvj5d",
+        "type": "video",
+        "url": "https://www.instagram.com/p/DX1oesizOEP/",
+        "publicId": ""
+      },
+      {
+        "id": "video-1780548053111-b4f22f",
+        "type": "video",
+        "url": "https://www.instagram.com/p/DX1oesizOEP/",
+        "publicId": ""
+      },
+      {
+        "id": "video-1780548055105-qo6ta5",
+        "type": "video",
+        "url": "https://www.instagram.com/p/DX1oesizOEP/",
+        "publicId": ""
+      }
+    ]
+  },
+  {
+    "id": "fdhgedfhg",
+    "name": "fdhgedfhg",
+    "subtitle": "gfdhfdgh",
+    "dateLabel": "dfgh",
+    "isoDate": "2026-06-12T03:54:00.000Z",
+    "timeLabel": "dgfh",
+    "venue": "dfgshg",
+    "venueAddress": "dgfshdg",
+    "city": "hsdfgh",
+    "mapLink": "hfsdgh",
+    "ticketTiers": [
+      {
+        "price": "₹dsfgh",
+        "label": "dfsghdg"
+      }
+    ],
+    "registrationLink": "dfgsh",
+    "districtLink": "sdfghfsdg",
+    "gatesOpenLabel": "dfgh",
     "status": "active",
-    "ticketTierName": "Madhuram - chapter 2 early bird",
-    "ticketTierDescription": "Your entry to Madhuram Chapter 2 - an evening packed with music, vibes, and good company.",
-    "availableTillLabel": "9th May 2026, 09:00 PM (GMT+05:30)",
-    "ticketsLeft": 2
+    "ticketTierName": "dsghgdfh",
+    "ticketTierDescription": "gdhdsgfh",
+    "availableTillLabel": "dhg",
+    "ticketsLeft": 50,
+    "dressCode": "grhfdgh",
+    "features": [
+      "fghfdgh"
+    ],
+    "media": [
+      {
+        "id": "image-1780546645624-ihyjg1",
+        "type": "image",
+        "url": "https://res.cloudinary.com/dmicenjpa/image/upload/v1780546643/netx/events/fdhgedfhg/gallery/item-1780546639793.jpg",
+        "publicId": "netx/events/fdhgedfhg/gallery/item-1780546639793"
+      }
+    ],
+    "poster": {
+      "type": "image",
+      "url": "https://res.cloudinary.com/dmicenjpa/image/upload/v1780546630/netx/events/fdhgedfhg/poster.png",
+      "publicId": "netx/events/fdhgedfhg/poster"
+    }
   }
 ]
