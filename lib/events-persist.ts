@@ -59,10 +59,10 @@ const saveToBlob = async (events: EventInfo[]): Promise<string | null> => {
   }
 };
 
-/** Load events from Vercel Blob, or bundled JSON when blob is empty or unavailable. */
+/** Load events from Vercel Blob, or bundled JSON only when blob does not exist yet. */
 export const loadEventsFromStorage = async (): Promise<EventInfo[]> => {
   const fromBlob = await loadFromBlob();
-  if (fromBlob && fromBlob.length > 0) return fromBlob;
+  if (fromBlob !== null) return fromBlob;
 
   return bundledEvents();
 };
@@ -76,6 +76,6 @@ export const persistEvents = async (
 export const ensureBlobSeeded = async (events: EventInfo[]): Promise<void> => {
   if (!blobToken()) return;
   const existing = await loadFromBlob();
-  if (existing && existing.length > 0) return;
+  if (existing !== null) return;
   await saveToBlob(events);
 };

@@ -15,9 +15,9 @@ const IMAGE_TYPES = new Set([
 const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
 
 const ensureConfigured = (): string | null => {
-  const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
-  const apiKey = process.env.CLOUDINARY_API_KEY;
-  const apiSecret = process.env.CLOUDINARY_API_SECRET;
+  const cloudName = "dmicenjpa";
+  const apiKey = "319675426826291";
+  const apiSecret = "w7Doykid9EOHE2rtQJdI9XJLZlY";
 
   if (!cloudName || !apiKey || !apiSecret) {
     return "Cloudinary is not configured. Set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in .env.local.";
