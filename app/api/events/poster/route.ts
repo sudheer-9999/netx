@@ -21,7 +21,7 @@ export const runtime = "nodejs";
 export async function POST(request: Request) {
   if (!isAdminRequest(request)) return unauthorizedResponse();
 
-  reloadEvents();
+  await reloadEvents();
   let formData: FormData;
   try {
     formData = await request.formData();
@@ -92,7 +92,10 @@ export async function POST(request: Request) {
     };
   }
 
-  const updated = setEventPoster(eventId.trim(), poster);
+  const { event: updated, error: saveError } = await setEventPoster(eventId.trim(), poster);
+  if (saveError) {
+    return NextResponse.json({ error: saveError }, { status: 503 });
+  }
   if (!updated) {
     return NextResponse.json({ error: "Failed to save poster." }, { status: 500 });
   }
@@ -107,7 +110,7 @@ export async function POST(request: Request) {
 export async function DELETE(request: Request) {
   if (!isAdminRequest(request)) return unauthorizedResponse();
 
-  reloadEvents();
+  await reloadEvents();
   const eventId = new URL(request.url).searchParams.get("eventId");
   if (!eventId) {
     return NextResponse.json({ error: "eventId is required." }, { status: 400 });
@@ -134,7 +137,11 @@ export async function DELETE(request: Request) {
     }
   }
 
-  const updated = setEventPoster(eventId, null);
+  const { event: updated, error: saveError } = await setEventPoster(eventId, null);
+  if (saveError) {
+    return NextResponse.json({ error: saveError }, { status: 503 });
+  }
+
   return NextResponse.json({
     ok: true,
     event: updated,

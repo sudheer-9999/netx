@@ -11,7 +11,7 @@ type PageProps = {
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  reloadEvents();
+  await reloadEvents();
   const { id } = await params;
   const event = getEventById(id);
   if (!event) return { title: "Experience not found" };
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ExperiencePage({ params }: PageProps) {
-  reloadEvents();
+  await reloadEvents();
   const { id } = await params;
   const event = getEventById(id);
   if (!event) notFound();

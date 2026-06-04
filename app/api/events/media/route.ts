@@ -21,7 +21,7 @@ export const runtime = "nodejs";
 export async function POST(request: Request) {
   if (!isAdminRequest(request)) return unauthorizedResponse();
 
-  reloadEvents();
+  await reloadEvents();
   let formData: FormData;
   try {
     formData = await request.formData();
@@ -95,7 +95,10 @@ export async function POST(request: Request) {
     };
   }
 
-  const updated = appendEventMedia(eventId.trim(), item);
+  const { event: updated, error: saveError } = await appendEventMedia(eventId.trim(), item);
+  if (saveError) {
+    return NextResponse.json({ error: saveError }, { status: 503 });
+  }
   if (!updated) {
     return NextResponse.json({ error: "Failed to save media." }, { status: 500 });
   }
@@ -110,7 +113,7 @@ export async function POST(request: Request) {
 export async function DELETE(request: Request) {
   if (!isAdminRequest(request)) return unauthorizedResponse();
 
-  reloadEvents();
+  await reloadEvents();
   const { searchParams } = new URL(request.url);
   const eventId = searchParams.get("eventId");
   const mediaId = searchParams.get("mediaId");
@@ -122,7 +125,10 @@ export async function DELETE(request: Request) {
     );
   }
 
-  const result = removeEventMedia(eventId, mediaId);
+  const { result, error: saveError } = await removeEventMedia(eventId, mediaId);
+  if (saveError) {
+    return NextResponse.json({ error: saveError }, { status: 503 });
+  }
   if (!result) {
     return NextResponse.json({ error: "Media not found." }, { status: 404 });
   }

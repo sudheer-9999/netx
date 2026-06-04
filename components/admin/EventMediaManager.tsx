@@ -4,6 +4,7 @@ import { useState } from "react";
 import ExternalVideoEmbed from "@/components/ExternalVideoEmbed";
 import { ADMIN_HEADER } from "@/lib/admin-auth";
 import type { EventInfo, EventMediaItem } from "@/lib/events";
+import { parseApiJson } from "@/lib/parse-api-response";
 
 type EventMediaManagerProps = {
   eventId: string | null;
@@ -49,13 +50,13 @@ const EventMediaManager = ({
         headers: { [ADMIN_HEADER]: adminKey },
         body: formData,
       });
-      const data = (await res.json()) as {
+      const { data, error: apiError } = await parseApiJson<{
         error?: string;
         item?: EventMediaItem;
         event?: EventInfo;
-      };
-      if (!res.ok || !data.item || !data.event) {
-        setError(data.error ?? "Upload failed.");
+      }>(res);
+      if (apiError || !data?.item || !data.event) {
+        setError(apiError || data?.error || "Upload failed.");
         return;
       }
       onMediaChange(data.event.media, data.event);
@@ -83,20 +84,20 @@ const EventMediaManager = ({
         headers: { [ADMIN_HEADER]: adminKey },
         body: formData,
       });
-      const data = (await res.json()) as {
+      const { data, error: apiError } = await parseApiJson<{
         error?: string;
         item?: EventMediaItem;
         event?: EventInfo;
-      };
-      if (!res.ok || !data.item || !data.event) {
-        setError(data.error ?? "Failed to add video link.");
+      }>(res);
+      if (apiError || !data?.item || !data.event) {
+        setError(apiError || data?.error || "Failed to add video link.");
         return;
       }
       setVideoUrl("");
       setVideoLabel("");
       onMediaChange(data.event.media, data.event);
     } catch {
-      setError("Network error while adding video.");
+      setError("Could not reach the server. Check your connection and try again.");
     } finally {
       setAddingVideo(false);
     }
@@ -114,19 +115,19 @@ const EventMediaManager = ({
           headers: { [ADMIN_HEADER]: adminKey },
         },
       );
-      const data = (await res.json()) as {
+      const { data, error: apiError } = await parseApiJson<{
         error?: string;
         event?: EventInfo;
         partial?: boolean;
-      };
-      if (!res.ok && !data.event) {
-        setError(data.error ?? "Delete failed.");
+      }>(res);
+      if (apiError && !data?.event) {
+        setError(apiError);
         return;
       }
-      if (data.event) {
+      if (data?.event) {
         onMediaChange(data.event.media, data.event);
       }
-      if (data.partial && data.error) {
+      if (data?.partial && data.error) {
         setError(data.error);
       }
     } catch {

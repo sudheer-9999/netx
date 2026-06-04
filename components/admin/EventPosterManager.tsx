@@ -4,6 +4,7 @@ import { useState } from "react";
 import ExternalVideoEmbed from "@/components/ExternalVideoEmbed";
 import { ADMIN_HEADER } from "@/lib/admin-auth";
 import type { EventInfo, EventPoster } from "@/lib/events";
+import { parseApiJson } from "@/lib/parse-api-response";
 
 type EventPosterManagerProps = {
   eventId: string | null;
@@ -48,13 +49,13 @@ const EventPosterManager = ({
         headers: { [ADMIN_HEADER]: adminKey },
         body: formData,
       });
-      const data = (await res.json()) as {
+      const { data, error: apiError } = await parseApiJson<{
         error?: string;
         poster?: EventPoster;
         event?: EventInfo;
-      };
-      if (!res.ok || !data.poster || !data.event) {
-        setError(data.error ?? "Poster upload failed.");
+      }>(res);
+      if (apiError || !data?.poster || !data.event) {
+        setError(apiError || data?.error || "Poster upload failed.");
         return;
       }
       onPosterChange(data.poster, data.event);
@@ -79,19 +80,19 @@ const EventPosterManager = ({
         headers: { [ADMIN_HEADER]: adminKey },
         body: formData,
       });
-      const data = (await res.json()) as {
+      const { data, error: apiError } = await parseApiJson<{
         error?: string;
         poster?: EventPoster;
         event?: EventInfo;
-      };
-      if (!res.ok || !data.poster || !data.event) {
-        setError(data.error ?? "Failed to save video link.");
+      }>(res);
+      if (apiError || !data?.poster || !data.event) {
+        setError(apiError || data?.error || "Failed to save video link.");
         return;
       }
       setVideoUrl("");
       onPosterChange(data.poster, data.event);
     } catch {
-      setError("Network error while saving video link.");
+      setError("Could not reach the server. Check your connection and try again.");
     } finally {
       setSavingVideo(false);
     }
@@ -108,12 +109,15 @@ const EventPosterManager = ({
         `/api/events/poster?eventId=${encodeURIComponent(eventId)}`,
         { method: "DELETE", headers: { [ADMIN_HEADER]: adminKey } },
       );
-      const data = (await res.json()) as { error?: string; event?: EventInfo };
-      if (!res.ok) {
-        setError(data.error ?? "Failed to remove poster.");
+      const { data, error: apiError } = await parseApiJson<{
+        error?: string;
+        event?: EventInfo;
+      }>(res);
+      if (apiError) {
+        setError(apiError);
         return;
       }
-      onPosterChange(null, data.event);
+      onPosterChange(null, data?.event);
     } catch {
       setError("Network error while removing poster.");
     } finally {
